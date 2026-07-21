@@ -7,6 +7,7 @@ import { seedCustomers } from "./seed/customers";
 import { seedBreakdownMetrics } from "./seed/breakdown";
 import { seedAdMetrics } from "./seed/ad-metrics";
 import { runAnalysisEngine } from "../src/lib/analysis/engine";
+import { getProvider } from "../src/lib/integrations/registry";
 
 const prisma = new PrismaClient();
 
@@ -125,6 +126,15 @@ async function main() {
     await seedCustomers(prisma, branches, services, campaigns);
   } else {
     console.log("↷ Demo campaigns/customers already present, skipping (idempotent seed).");
+  }
+
+  const existingIntegrationCount = await prisma.integration.count();
+  if (existingIntegrationCount === 0) {
+    const preConnected = ["META_ADS", "GOOGLE_ADS", "SNAPCHAT_ADS", "TIKTOK_ADS"] as const;
+    for (const platform of preConnected) {
+      await getProvider(platform).connect();
+    }
+    console.log(`✔ Integrations pre-connected via mock providers (${preConnected.length})`);
   }
 
   const analysisSummary = await runAnalysisEngine();
