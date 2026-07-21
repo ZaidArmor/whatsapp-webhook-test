@@ -1,6 +1,9 @@
 import { PrismaClient, PermissionKey, RoleName } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { ROLE_PERMISSIONS, ROLE_LABELS } from "../src/lib/auth/permissions";
+import { seedServices } from "./seed/services";
+import { seedCampaigns } from "./seed/campaigns";
+import { seedCustomers } from "./seed/customers";
 
 const prisma = new PrismaClient();
 
@@ -109,7 +112,17 @@ async function main() {
   const primaryBranch = branches[0];
   if (!primaryBranch) throw new Error("Expected at least one branch to be seeded");
   await seedAdminUser(primaryBranch.id);
-  console.log("Core auth/RBAC seed complete.");
+
+  const existingCampaignCount = await prisma.campaign.count();
+  if (existingCampaignCount === 0) {
+    const services = await seedServices(prisma);
+    const campaigns = await seedCampaigns(prisma, branches, services);
+    await seedCustomers(prisma, branches, services, campaigns);
+  } else {
+    console.log("↷ Demo campaigns/customers already present, skipping (idempotent seed).");
+  }
+
+  console.log("Seed complete.");
 }
 
 main()
