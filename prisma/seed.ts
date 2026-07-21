@@ -6,6 +6,7 @@ import { seedCampaigns } from "./seed/campaigns";
 import { seedCustomers } from "./seed/customers";
 import { seedBreakdownMetrics } from "./seed/breakdown";
 import { seedAdMetrics } from "./seed/ad-metrics";
+import { runAnalysisEngine } from "../src/lib/analysis/engine";
 
 const prisma = new PrismaClient();
 
@@ -125,6 +126,11 @@ async function main() {
   } else {
     console.log("↷ Demo campaigns/customers already present, skipping (idempotent seed).");
   }
+
+  const analysisSummary = await runAnalysisEngine();
+  console.log(
+    `✔ Analysis engine run: ${analysisSummary.recommendationsCreated} recommendations, ${analysisSummary.alertsCreated} alerts (${analysisSummary.campaignsAnalyzed} campaigns analyzed)`
+  );
 
   console.log("Seed complete.");
 }
