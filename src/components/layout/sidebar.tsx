@@ -17,7 +17,11 @@ export function Sidebar({ permissions }: { permissions: string[] }) {
   const [collapsed, setCollapsed] = React.useState(false);
 
   React.useEffect(() => {
+    // One-time read of a browser-only API (localStorage) to restore the
+    // user's last collapse preference — must run after mount since it's
+    // unavailable during SSR, so the synchronous setState here is intentional.
     const stored = window.localStorage.getItem(COLLAPSE_KEY);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (stored) setCollapsed(stored === "1");
   }, []);
 
@@ -126,6 +130,7 @@ function navLabelAr(key: string): string {
     users: "المستخدمون",
     settings: "الإعدادات",
     auditLog: "سجل التدقيق",
+    "audit-log": "سجل التدقيق",
     import: "استيراد العملاء",
     duplicates: "العملاء المكررون",
     new: "شريحة جديدة",

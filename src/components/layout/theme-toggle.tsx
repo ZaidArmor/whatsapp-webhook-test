@@ -9,6 +9,9 @@ export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
+  // Standard next-themes SSR guard: `resolvedTheme` is only meaningful after
+  // client mount, so this deliberately triggers one extra render.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   React.useEffect(() => setMounted(true), []);
 
   return (

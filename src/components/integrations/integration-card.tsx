@@ -30,8 +30,11 @@ export function IntegrationCard({ integration }: { integration: IntegrationRow }
   const [lastSyncSummary, setLastSyncSummary] = React.useState<string | null>(null);
   const meta = STATUS_META[integration.status];
 
-  const tokenNearExpiry =
-    integration.tokenExpiresAt && integration.tokenExpiresAt.getTime() - Date.now() < 7 * 24 * 60 * 60 * 1000;
+  // Reading the clock during render is intentional here: this only feeds a
+  // same-day warning badge, so the SSR/client render being off by
+  // milliseconds is inconsequential (never flips the 7-day boundary in practice).
+  /* eslint-disable-next-line react-hooks/purity */
+  const tokenNearExpiry = integration.tokenExpiresAt && integration.tokenExpiresAt.getTime() - Date.now() < 7 * 24 * 60 * 60 * 1000;
 
   return (
     <Card>
