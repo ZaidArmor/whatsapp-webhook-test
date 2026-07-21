@@ -126,6 +126,9 @@ function navLabelAr(key: string): string {
     users: "المستخدمون",
     settings: "الإعدادات",
     auditLog: "سجل التدقيق",
+    import: "استيراد العملاء",
+    duplicates: "العملاء المكررون",
+    new: "شريحة جديدة",
   };
   return map[key] ?? key;
 }

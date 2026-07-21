@@ -19,7 +19,10 @@ export function Breadcrumbs() {
       {segments.map((segment, index) => {
         const href = `/${segments.slice(0, index + 1).join("/")}`;
         const isLast = index === segments.length - 1;
-        const label = /^[a-z0-9]{10,}$/i.test(segment) ? "التفاصيل" : navLabelAr(segment);
+        // Prisma cuids are long, mixed alphanumeric, and always contain a digit —
+        // distinct enough from short route words (e.g. "duplicates") to detect safely.
+        const looksLikeId = segment.length >= 20 && /\d/.test(segment) && /^[a-z0-9]+$/i.test(segment);
+        const label = looksLikeId ? "التفاصيل" : navLabelAr(segment);
         return (
           <span key={href} className="flex items-center gap-1">
             <ChevronLeft className="h-3.5 w-3.5 rtl-flip" />
