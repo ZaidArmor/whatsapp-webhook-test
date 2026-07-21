@@ -87,11 +87,28 @@ function buildCampaignWhere(filters: DashboardFilters): Prisma.CampaignWhereInpu
   return where;
 }
 
+/**
+ * CampaignMetric stores both daily aggregate rows (all breakdown dimensions
+ * null) and dimension-breakdown rows (device/region/ageRange/gender/hour) for
+ * the campaign detail page. Dashboard-level totals must only read the
+ * aggregate rows, or breakdown rows would double-count spend/revenue/etc.
+ */
+const AGGREGATE_ROW_FILTER = {
+  device: null,
+  region: null,
+  ageRange: null,
+  gender: null,
+  hour: null,
+  adId: null,
+  adSetId: null,
+} as const;
+
 async function loadMetricRows(filters: DashboardFilters) {
   return prisma.campaignMetric.findMany({
     where: {
       date: { gte: filters.range.from, lte: filters.range.to },
       campaign: buildCampaignWhere(filters),
+      ...AGGREGATE_ROW_FILTER,
     },
     include: {
       campaign: { include: { branch: true, service: true } },

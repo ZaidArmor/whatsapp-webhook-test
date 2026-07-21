@@ -28,7 +28,7 @@ const RIYADH_TZ = "Asia/Riyadh";
 
 export function formatDate(date: Date | string, locale: "ar" | "en" = "ar"): string {
   const d = typeof date === "string" ? new Date(date) : date;
-  return new Intl.DateTimeFormat(locale === "ar" ? "ar-SA-u-nu-latn" : "en-US", {
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar-SA-u-nu-latn-ca-gregory" : "en-US", {
     timeZone: RIYADH_TZ,
     year: "numeric",
     month: "short",
@@ -38,7 +38,7 @@ export function formatDate(date: Date | string, locale: "ar" | "en" = "ar"): str
 
 export function formatDateTime(date: Date | string, locale: "ar" | "en" = "ar"): string {
   const d = typeof date === "string" ? new Date(date) : date;
-  return new Intl.DateTimeFormat(locale === "ar" ? "ar-SA-u-nu-latn" : "en-US", {
+  return new Intl.DateTimeFormat(locale === "ar" ? "ar-SA-u-nu-latn-ca-gregory" : "en-US", {
     timeZone: RIYADH_TZ,
     year: "numeric",
     month: "short",

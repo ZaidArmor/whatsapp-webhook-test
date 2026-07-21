@@ -4,6 +4,8 @@ import { ROLE_PERMISSIONS, ROLE_LABELS } from "../src/lib/auth/permissions";
 import { seedServices } from "./seed/services";
 import { seedCampaigns } from "./seed/campaigns";
 import { seedCustomers } from "./seed/customers";
+import { seedBreakdownMetrics } from "./seed/breakdown";
+import { seedAdMetrics } from "./seed/ad-metrics";
 
 const prisma = new PrismaClient();
 
@@ -117,6 +119,8 @@ async function main() {
   if (existingCampaignCount === 0) {
     const services = await seedServices(prisma);
     const campaigns = await seedCampaigns(prisma, branches, services);
+    await seedBreakdownMetrics(prisma, campaigns, branches);
+    await seedAdMetrics(prisma, campaigns);
     await seedCustomers(prisma, branches, services, campaigns);
   } else {
     console.log("↷ Demo campaigns/customers already present, skipping (idempotent seed).");
