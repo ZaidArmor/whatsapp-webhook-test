@@ -213,8 +213,15 @@
   "inbox": {
     "title": "Unified Inbox",
     "subtitle": "Every comment and message from all platforms in one place",
-    "kinds": { "COMMENT": "Comment", "MESSAGE": "Message" },
-    "statuses": { "OPEN": "Open", "IN_PROGRESS": "In progress", "CLOSED": "Closed" },
+    "kinds": {
+      "COMMENT": "Comment",
+      "MESSAGE": "Message"
+    },
+    "statuses": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In progress",
+      "CLOSED": "Closed"
+    },
     "assignTo": "Assign to",
     "unassigned": "Unassigned",
     "reply": "Reply",
@@ -243,7 +250,12 @@
       "CONVERSIONS": "Conversions",
       "SALES": "Sales"
     },
-    "statuses": { "DRAFT": "Draft", "ACTIVE": "Active", "PAUSED": "Paused", "COMPLETED": "Completed" },
+    "statuses": {
+      "DRAFT": "Draft",
+      "ACTIVE": "Active",
+      "PAUSED": "Paused",
+      "COMPLETED": "Completed"
+    },
     "budget": "Budget",
     "startDate": "Start date",
     "endDate": "End date",
@@ -292,7 +304,13 @@
     "pipeline": "Pipeline",
     "pipelineValue": "Pipeline value",
     "contactCreated": "Contact added",
-    "stageChanged": "Stage changed from \"{from}\" to \"{to}\""
+    "stageChanged": "Stage changed from \"{from}\" to \"{to}\"",
+    "activityTypes": {
+      "NOTE": "Note",
+      "CALL": "Call",
+      "MEETING": "Meeting",
+      "STAGE_CHANGE": "Stage change"
+    }
   },
   "reports": {
     "title": "Reports Engine",
@@ -321,9 +339,22 @@
     "subtitle": "Smart, rules-based recommendations and alerts",
     "run": "Run analysis now",
     "runDone": "Generated {count} items from {campaigns} campaigns and accounts",
-    "kinds": { "RECOMMENDATION": "Recommendation", "ALERT": "Alert" },
-    "severities": { "INFO": "Info", "OPPORTUNITY": "Opportunity", "WARNING": "Warning", "CRITICAL": "Critical" },
-    "statuses": { "OPEN": "Open", "IN_PROGRESS": "In progress", "RESOLVED": "Resolved", "DISMISSED": "Dismissed" },
+    "kinds": {
+      "RECOMMENDATION": "Recommendation",
+      "ALERT": "Alert"
+    },
+    "severities": {
+      "INFO": "Info",
+      "OPPORTUNITY": "Opportunity",
+      "WARNING": "Warning",
+      "CRITICAL": "Critical"
+    },
+    "statuses": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In progress",
+      "RESOLVED": "Resolved",
+      "DISMISSED": "Dismissed"
+    },
     "empty": "No insights yet — run the analysis"
   },
   "team": {

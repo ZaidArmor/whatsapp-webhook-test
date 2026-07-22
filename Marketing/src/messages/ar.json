@@ -304,7 +304,13 @@
     "pipeline": "مسار المبيعات",
     "pipelineValue": "قيمة المسار",
     "contactCreated": "تمت إضافة جهة الاتصال",
-    "stageChanged": "تم تغيير المرحلة من \"{from}\" إلى \"{to}\""
+    "stageChanged": "تم تغيير المرحلة من \"{from}\" إلى \"{to}\"",
+    "activityTypes": {
+      "NOTE": "ملاحظة",
+      "CALL": "مكالمة",
+      "MEETING": "اجتماع",
+      "STAGE_CHANGE": "تغيير مرحلة"
+    }
   },
   "reports": {
     "title": "محرك التقارير",
