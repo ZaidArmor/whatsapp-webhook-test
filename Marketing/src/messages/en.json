@@ -332,7 +332,11 @@
     "scheduleMonthly": "Schedule monthly",
     "scheduledOk": "Report scheduled monthly",
     "lastGenerated": "Last generated",
-    "noScheduled": "No scheduled reports"
+    "noScheduled": "No scheduled reports",
+    "columns": {
+      "count": "Count",
+      "kind": "Type"
+    }
   },
   "insights": {
     "title": "Insights & Recommendations",
@@ -355,7 +359,40 @@
       "RESOLVED": "Resolved",
       "DISMISSED": "Dismissed"
     },
-    "empty": "No insights yet — run the analysis"
+    "empty": "No insights yet — run the analysis",
+    "rules": {
+      "lowRoas": {
+        "title": "Campaign losing money: {name}",
+        "body": "ROAS is only {roas} after spending SAR {spend}. Consider pausing the campaign or revisiting audience and offer."
+      },
+      "lowCtr": {
+        "title": "Low click-through rate: {name}",
+        "body": "CTR of {ctr} is below the 0.8% benchmark. Try refreshing the creative or ad copy."
+      },
+      "scaleWinner": {
+        "title": "Scaling opportunity: {name}",
+        "body": "This campaign delivers an excellent return ({roas}). Gradually raising the budget by 20% could multiply results."
+      },
+      "cpcRising": {
+        "title": "CPC rising: {name}",
+        "body": "Cost per click rose {change} over the last 7 days vs the prior week ({from} → {to}). Watch for audience fatigue."
+      },
+      "engagementDrop": {
+        "title": "Engagement drop: {name}",
+        "body": "Account engagement fell {change} over the last 7 days vs the prior week. Try varying content or posting times."
+      },
+      "topPost": {
+        "title": "Top post of the last 30 days",
+        "body": "The post \"{excerpt}\" earned {engagements} engagements. Consider boosting it or reusing its format."
+      },
+      "bestTime": {
+        "title": "Best time to post",
+        "body": "Your audience engages most on {day} around {hour}. Schedule upcoming content in this window."
+      }
+    },
+    "markResolved": "Resolve",
+    "dismiss": "Dismiss",
+    "reopen": "Reopen"
   },
   "team": {
     "title": "Team & Workspaces",
