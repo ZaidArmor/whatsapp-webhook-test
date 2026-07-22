@@ -1,0 +1,595 @@
+// ============================================================================
+// Marketing — Social Command Center | Prisma Schema
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------------------------------
+// Enums
+// ----------------------------------------------------------------------------
+
+enum PlatformKind {
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK
+  SNAPCHAT
+  X_TWITTER
+  LINKEDIN
+  GOOGLE_ADS
+  YOUTUBE
+}
+
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  MANAGER
+  EDITOR
+  ANALYST
+  VIEWER
+}
+
+enum AccountStatus {
+  CONNECTED
+  DISCONNECTED
+  ERROR
+  EXPIRED
+}
+
+enum MediaKind {
+  IMAGE
+  VIDEO
+}
+
+enum PostStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  SCHEDULED
+  PUBLISHED
+  FAILED
+}
+
+enum ConversationKind {
+  COMMENT
+  MESSAGE
+}
+
+enum InboxStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum AdObjective {
+  AWARENESS
+  TRAFFIC
+  ENGAGEMENT
+  LEADS
+  CONVERSIONS
+  SALES
+}
+
+enum AdCampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+enum PipelineStage {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL
+  WON
+  LOST
+}
+
+enum InsightKind {
+  RECOMMENDATION
+  ALERT
+}
+
+enum InsightSeverity {
+  INFO
+  OPPORTUNITY
+  WARNING
+  CRITICAL
+}
+
+enum InsightStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportKind {
+  MONTHLY_CLIENT
+  CAMPAIGN_PERFORMANCE
+  PLATFORM_COMPARISON
+  CONTENT_PERFORMANCE
+  INBOX_ACTIVITY
+  CRM_PIPELINE
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  PUBLISH
+  SCHEDULE
+  APPROVE
+  REJECT
+  EXPORT
+  CONNECT
+  DISCONNECT
+  REPLY
+  ASSIGN
+}
+
+// ----------------------------------------------------------------------------
+// Users / Workspaces / Membership (multi-tenant)
+// ----------------------------------------------------------------------------
+
+model User {
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
+  passwordHash String?
+  image        String?
+  isActive     Boolean @default(true)
+
+  memberships     WorkspaceMember[]
+  postsAuthored   Post[]             @relation("PostAuthor")
+  postsApproved   Post[]             @relation("PostApprover")
+  assignedInbox   Conversation[]     @relation("InboxAssignee")
+  sentMessages    ConversationMessage[]
+  contactsOwned   Contact[]          @relation("ContactOwner")
+  mediaUploaded   MediaAsset[]
+  auditLogs       AuditLog[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([email])
+}
+
+model Workspace {
+  id         String  @id @default(cuid())
+  name       String
+  slug       String  @unique
+  brandColor String  @default("#1B1940")
+  isActive   Boolean @default(true)
+
+  members        WorkspaceMember[]
+  socialAccounts SocialAccount[]
+  posts          Post[]
+  media          MediaAsset[]
+  conversations  Conversation[]
+  contacts       Contact[]
+  adCampaigns    AdCampaign[]
+  insights       Insight[]
+  reports        Report[]
+  apiCredentials ApiCredential[]
+  auditLogs      AuditLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model WorkspaceMember {
+  id          String        @id @default(cuid())
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        WorkspaceRole @default(VIEWER)
+
+  createdAt DateTime @default(now())
+
+  @@unique([workspaceId, userId])
+  @@index([userId])
+}
+
+// ----------------------------------------------------------------------------
+// Connected social accounts
+// ----------------------------------------------------------------------------
+
+model SocialAccount {
+  id          String        @id @default(cuid())
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  platform    PlatformKind
+  status      AccountStatus @default(DISCONNECTED)
+  handle      String
+  displayName String
+  externalId  String?
+  avatarColor String        @default("#1B1940")
+  followers   Int           @default(0)
+  isMock      Boolean       @default(true)
+  tokenExpiresAt DateTime?
+  lastSyncAt     DateTime?
+  errorMessage   String?
+
+  postTargets   PostTarget[]
+  conversations Conversation[]
+  adCampaigns   AdCampaign[]
+  dailyStats    AccountDailyStat[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([workspaceId, platform, handle])
+  @@index([workspaceId, platform])
+  @@index([status])
+}
+
+// Daily account-level insight snapshot (followers/reach/engagement...)
+model AccountDailyStat {
+  id              String        @id @default(cuid())
+  socialAccountId String
+  socialAccount   SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  date            DateTime      @db.Date
+  followers       Int           @default(0)
+  reach           Int           @default(0)
+  impressions     Int           @default(0)
+  engagements     Int           @default(0)
+  clicks          Int           @default(0)
+  videoViews      Int           @default(0)
+
+  @@unique([socialAccountId, date])
+  @@index([date])
+}
+
+// ----------------------------------------------------------------------------
+// Content: media, posts, per-platform targets, scheduling & approvals
+// ----------------------------------------------------------------------------
+
+model MediaAsset {
+  id           String    @id @default(cuid())
+  workspaceId  String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind         MediaKind
+  fileName     String
+  url          String
+  thumbnailUrl String?
+  sizeBytes    Int       @default(0)
+  uploadedById String?
+  uploadedBy   User?     @relation(fields: [uploadedById], references: [id])
+
+  postMedia PostMedia[]
+  ads       Ad[]
+
+  createdAt DateTime @default(now())
+
+  @@index([workspaceId])
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  workspaceId String
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User       @relation("PostAuthor", fields: [authorId], references: [id])
+  title       String?
+  body        String
+  status      PostStatus @default(DRAFT)
+  scheduledAt DateTime?
+  publishedAt DateTime?
+
+  approvedById  String?
+  approvedBy    User?    @relation("PostApprover", fields: [approvedById], references: [id])
+  approvalNote  String?
+
+  targets PostTarget[]
+  media   PostMedia[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([workspaceId, status])
+  @@index([scheduledAt])
+}
+
+model PostMedia {
+  id           String     @id @default(cuid())
+  postId       String
+  post         Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  mediaAssetId String
+  mediaAsset   MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+  sortOrder    Int        @default(0)
+
+  @@unique([postId, mediaAssetId])
+}
+
+// Per-platform publication of a post (allows per-platform body override + metrics)
+model PostTarget {
+  id              String        @id @default(cuid())
+  postId          String
+  post            Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  socialAccountId String
+  socialAccount   SocialAccount @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  bodyOverride    String?
+  status          PostStatus    @default(DRAFT)
+  externalPostId  String?
+  publishedAt     DateTime?
+  failureReason   String?
+
+  impressions Int @default(0)
+  reach       Int @default(0)
+  likes       Int @default(0)
+  comments    Int @default(0)
+  shares      Int @default(0)
+  clicks      Int @default(0)
+
+  conversations Conversation[]
+
+  @@unique([postId, socialAccountId])
+  @@index([socialAccountId, status])
+}
+
+// ----------------------------------------------------------------------------
+// Unified Inbox
+// ----------------------------------------------------------------------------
+
+model Conversation {
+  id              String           @id @default(cuid())
+  workspaceId     String
+  workspace       Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  socialAccountId String
+  socialAccount   SocialAccount    @relation(fields: [socialAccountId], references: [id], onDelete: Cascade)
+  kind            ConversationKind
+  status          InboxStatus      @default(OPEN)
+  authorName      String
+  authorHandle    String
+  assignedToId    String?
+  assignedTo      User?            @relation("InboxAssignee", fields: [assignedToId], references: [id])
+  postTargetId    String?
+  postTarget      PostTarget?      @relation(fields: [postTargetId], references: [id])
+  lastMessageAt   DateTime         @default(now())
+
+  messages ConversationMessage[]
+
+  createdAt DateTime @default(now())
+
+  @@index([workspaceId, status])
+  @@index([assignedToId])
+  @@index([lastMessageAt])
+}
+
+model ConversationMessage {
+  id             String           @id @default(cuid())
+  conversationId String
+  conversation   Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  direction      MessageDirection
+  body           String
+  sentById       String?
+  sentBy         User?            @relation(fields: [sentById], references: [id])
+  sentAt         DateTime         @default(now())
+
+  @@index([conversationId, sentAt])
+}
+
+// ----------------------------------------------------------------------------
+// Ads Manager: campaign -> ad set -> ad (+ daily metrics)
+// ----------------------------------------------------------------------------
+
+model AdCampaign {
+  id              String           @id @default(cuid())
+  workspaceId     String
+  workspace       Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  socialAccountId String?
+  socialAccount   SocialAccount?   @relation(fields: [socialAccountId], references: [id])
+  platform        PlatformKind
+  name            String
+  objective       AdObjective
+  status          AdCampaignStatus @default(DRAFT)
+  budget          Decimal          @db.Decimal(12, 2)
+  startDate       DateTime
+  endDate         DateTime?
+
+  adSets   AdSet[]
+  metrics  AdMetric[]
+  contacts Contact[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([workspaceId, platform])
+  @@index([status])
+}
+
+model AdSet {
+  id         String     @id @default(cuid())
+  campaignId String
+  campaign   AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  name       String
+  audience   String?
+  budget     Decimal    @db.Decimal(12, 2)
+
+  ads     Ad[]
+  metrics AdMetric[]
+
+  createdAt DateTime @default(now())
+
+  @@index([campaignId])
+}
+
+model Ad {
+  id           String      @id @default(cuid())
+  adSetId      String
+  adSet        AdSet       @relation(fields: [adSetId], references: [id], onDelete: Cascade)
+  name         String
+  headline     String?
+  bodyText     String?
+  mediaAssetId String?
+  mediaAsset   MediaAsset? @relation(fields: [mediaAssetId], references: [id])
+
+  metrics AdMetric[]
+
+  createdAt DateTime @default(now())
+
+  @@index([adSetId])
+}
+
+model AdMetric {
+  id         String     @id @default(cuid())
+  date       DateTime   @db.Date
+  campaignId String
+  campaign   AdCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  adSetId    String?
+  adSet      AdSet?     @relation(fields: [adSetId], references: [id], onDelete: SetNull)
+  adId       String?
+  ad         Ad?        @relation(fields: [adId], references: [id], onDelete: SetNull)
+
+  impressions Int     @default(0)
+  clicks      Int     @default(0)
+  spend       Decimal @default(0) @db.Decimal(12, 2)
+  leads       Int     @default(0)
+  conversions Int     @default(0)
+  revenue     Decimal @default(0) @db.Decimal(12, 2)
+
+  @@index([campaignId, date])
+  @@index([date])
+  @@index([adSetId])
+  @@index([adId])
+}
+
+// ----------------------------------------------------------------------------
+// CRM
+// ----------------------------------------------------------------------------
+
+model Contact {
+  id          String        @id @default(cuid())
+  workspaceId String
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  phone       String?
+  email       String?
+  source      PlatformKind?
+  stage       PipelineStage @default(NEW)
+  value       Decimal       @default(0) @db.Decimal(12, 2)
+  ownerId     String?
+  owner       User?         @relation("ContactOwner", fields: [ownerId], references: [id])
+  campaignId  String?
+  campaign    AdCampaign?   @relation(fields: [campaignId], references: [id])
+  notes       String?
+
+  activities ContactActivity[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([workspaceId, stage])
+  @@index([campaignId])
+  @@index([email])
+  @@index([phone])
+}
+
+model ContactActivity {
+  id          String   @id @default(cuid())
+  contactId   String
+  contact     Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  type        String
+  description String
+  createdById String?
+
+  createdAt DateTime @default(now())
+
+  @@index([contactId, createdAt])
+}
+
+// ----------------------------------------------------------------------------
+// Insights (recommendations + alerts), Reports, Settings, Audit
+// ----------------------------------------------------------------------------
+
+model Insight {
+  id          String          @id @default(cuid())
+  workspaceId String
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  kind        InsightKind
+  severity    InsightSeverity
+  status      InsightStatus   @default(OPEN)
+  title       String
+  body        String
+  metricData  Json?
+  campaignId  String?
+  postId      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workspaceId, kind, status])
+  @@index([severity])
+}
+
+model Report {
+  id              String     @id @default(cuid())
+  workspaceId     String
+  workspace       Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name            String
+  kind            ReportKind
+  config          Json?
+  scheduleCron    String?
+  lastGeneratedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([workspaceId])
+}
+
+// API key fields exist in settings but stay inactive until real integration.
+model ApiCredential {
+  id          String       @id @default(cuid())
+  workspaceId String
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  platform    PlatformKind
+  keyName     String
+  value       String?
+  isActive    Boolean      @default(false)
+
+  updatedAt DateTime @updatedAt
+
+  @@unique([workspaceId, platform, keyName])
+}
+
+model AuditLog {
+  id          String      @id @default(cuid())
+  workspaceId String?
+  workspace   Workspace?  @relation(fields: [workspaceId], references: [id])
+  userId      String?
+  user        User?       @relation(fields: [userId], references: [id])
+  action      AuditAction
+  entityType  String
+  entityId    String?
+  metadata    Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([workspaceId, createdAt])
+  @@index([userId])
+  @@index([entityType, entityId])
+}

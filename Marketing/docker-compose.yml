@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: marketing_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-marketing}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-marketing_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-marketing_command}
+    ports:
+      - "5433:5432"
+    volumes:
+      - marketing_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-marketing} -d ${POSTGRES_DB:-marketing_command}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  marketing_pgdata:
