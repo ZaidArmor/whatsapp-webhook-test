@@ -1,0 +1,453 @@
+{
+  "app": {
+    "name": "Marketing — Social Command Center",
+    "shortName": "Marketing",
+    "tagline": "Manage accounts, campaigns and content from one place"
+  },
+  "common": {
+    "search": "Search...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create",
+    "view": "View",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "noResults": "No matching results",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "success": "Operation completed successfully",
+    "all": "All",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "name": "Name",
+    "columns": "Columns",
+    "export": "Export",
+    "print": "Print",
+    "results": "{count} results — page {page} of {pages}",
+    "savedSuccessfully": "Saved successfully",
+    "areYouSure": "Are you sure?",
+    "optional": "Optional",
+    "today": "Today",
+    "last7Days": "Last 7 days",
+    "last30Days": "Last 30 days",
+    "last90Days": "Last 90 days",
+    "platform": "Platform",
+    "account": "Account",
+    "period": "Period",
+    "campaign": "Campaign",
+    "clearFilters": "Clear filters",
+    "language": "Language",
+    "theme": "Theme",
+    "collapse": "Collapse",
+    "details": "Details",
+    "permissionDenied": "You don't have permission to perform this action",
+    "notConnectedYet": "Not connected yet"
+  },
+  "nav": {
+    "groups": {
+      "general": "General",
+      "content": "Content",
+      "engagement": "Engagement",
+      "growth": "Growth",
+      "admin": "Administration"
+    },
+    "dashboard": "Dashboard",
+    "connections": "Connections",
+    "posts": "Posts",
+    "composer": "New Post",
+    "calendar": "Calendar",
+    "inbox": "Inbox",
+    "ads": "Ads Manager",
+    "crm": "CRM",
+    "reports": "Reports",
+    "insights": "Insights",
+    "team": "Team & Workspaces",
+    "settings": "Settings",
+    "auditLog": "Audit Log"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "signInTitle": "Sign in to your account",
+    "signInSubtitle": "Enter your credentials to access the command center",
+    "invalidCredentials": "Invalid email or password",
+    "invalidInput": "Please check the entered data",
+    "demoAccount": "Demo account: {email} / password: {password}",
+    "profile": "Profile",
+    "highlight1": "Unified publishing & scheduling across 8 platforms",
+    "highlight2": "One inbox for every comment and message",
+    "highlight3": "Cross-platform ad campaigns and ROAS reporting"
+  },
+  "roles": {
+    "OWNER": "Owner",
+    "ADMIN": "Admin",
+    "MANAGER": "Manager",
+    "EDITOR": "Editor",
+    "ANALYST": "Analyst",
+    "VIEWER": "Viewer"
+  },
+  "platforms": {
+    "FACEBOOK": "Facebook",
+    "INSTAGRAM": "Instagram",
+    "TIKTOK": "TikTok",
+    "SNAPCHAT": "Snapchat",
+    "X_TWITTER": "X (Twitter)",
+    "LINKEDIN": "LinkedIn",
+    "GOOGLE_ADS": "Google Ads",
+    "YOUTUBE": "YouTube"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "A unified view of performance across all platforms",
+    "kpis": {
+      "followers": "Total Followers",
+      "reach": "Reach",
+      "impressions": "Impressions",
+      "engagements": "Engagements",
+      "engagementRate": "Engagement Rate",
+      "clicks": "Clicks",
+      "adSpend": "Ad Spend",
+      "revenue": "Revenue",
+      "conversions": "Conversions",
+      "roas": "ROAS",
+      "cpc": "CPC",
+      "publishedPosts": "Published Posts",
+      "openConversations": "Open Conversations"
+    },
+    "charts": {
+      "followersGrowth": "Followers Growth",
+      "engagementByPlatform": "Engagement by Platform",
+      "reachTrend": "Reach Over Time",
+      "spendVsRevenue": "Spend vs Revenue",
+      "roasByPlatform": "ROAS by Platform",
+      "topPosts": "Top Performing Posts"
+    },
+    "vsPrevPeriod": "vs previous period",
+    "noChange": "No change"
+  },
+  "connections": {
+    "title": "Connections",
+    "subtitle": "Connect and manage platform accounts — currently in mock mode, ready for real APIs later",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "reconnect": "Reconnect",
+    "sync": "Sync now",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "error": "Error",
+    "expired": "Expired",
+    "followersCount": "{count} followers",
+    "lastSync": "Last sync",
+    "tokenExpires": "Token expires",
+    "accountId": "Account ID",
+    "disconnectConfirmTitle": "Disconnect account",
+    "disconnectConfirmBody": "Syncing and publishing will stop for this account. You can reconnect anytime.",
+    "syncDone": "Synced {count} items successfully",
+    "syncFailed": "Sync failed — please retry"
+  },
+  "posts": {
+    "title": "Posts",
+    "subtitle": "All content: drafts, pending approval, scheduled, published",
+    "newPost": "New Post",
+    "postBody": "Post body",
+    "postTitle": "Internal title (optional)",
+    "selectAccounts": "Publishing accounts",
+    "preview": "Preview",
+    "previewFor": "{platform} preview",
+    "media": "Media",
+    "addMedia": "Add media",
+    "schedule": "Schedule",
+    "scheduleAt": "Publish time",
+    "publishNow": "Publish now",
+    "saveDraft": "Save as draft",
+    "submitForApproval": "Submit for approval",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approvalNote": "Approval/rejection note",
+    "bestTimes": "Suggested best times to post",
+    "bestTimeHint": "Based on your audience engagement over the last 30 days",
+    "queue": "Queue",
+    "emptyQueue": "No scheduled posts",
+    "statuses": {
+      "DRAFT": "Draft",
+      "PENDING_APPROVAL": "Pending approval",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "SCHEDULED": "Scheduled",
+      "PUBLISHED": "Published",
+      "FAILED": "Failed"
+    },
+    "author": "Author",
+    "targets": "Target platforms",
+    "scheduledFor": "Scheduled for",
+    "publishedAt": "Published at",
+    "bodyRequired": "Post body is required",
+    "accountsRequired": "Select at least one account",
+    "publishedSuccessfully": "Published successfully (mock)",
+    "scheduledSuccessfully": "Scheduled successfully",
+    "perPlatformOverride": "Customize text for this platform (optional)",
+    "metrics": {
+      "impressions": "Impressions",
+      "likes": "Likes",
+      "comments": "Comments",
+      "shares": "Shares",
+      "clicks": "Clicks"
+    }
+  },
+  "calendar": {
+    "title": "Publishing Calendar",
+    "subtitle": "Monthly view of all scheduled and published content",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "noPostsThisDay": "No content on this day"
+  },
+  "inbox": {
+    "title": "Unified Inbox",
+    "subtitle": "Every comment and message from all platforms in one place",
+    "kinds": {
+      "COMMENT": "Comment",
+      "MESSAGE": "Message"
+    },
+    "statuses": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In progress",
+      "CLOSED": "Closed"
+    },
+    "assignTo": "Assign to",
+    "unassigned": "Unassigned",
+    "reply": "Reply",
+    "replyPlaceholder": "Write your reply...",
+    "send": "Send",
+    "markInProgress": "In progress",
+    "markClosed": "Close",
+    "reopen": "Reopen",
+    "emptyInbox": "No matching conversations",
+    "selectConversation": "Select a conversation from the list",
+    "onPost": "On post",
+    "replySent": "Reply sent (mock)"
+  },
+  "ads": {
+    "title": "Ads Manager",
+    "subtitle": "Meta, TikTok, Snapchat and Google Ads campaigns from one screen",
+    "newCampaign": "New campaign",
+    "editCampaign": "Edit campaign",
+    "campaignName": "Campaign name",
+    "objective": "Objective",
+    "objectives": {
+      "AWARENESS": "Awareness",
+      "TRAFFIC": "Traffic",
+      "ENGAGEMENT": "Engagement",
+      "LEADS": "Leads",
+      "CONVERSIONS": "Conversions",
+      "SALES": "Sales"
+    },
+    "statuses": {
+      "DRAFT": "Draft",
+      "ACTIVE": "Active",
+      "PAUSED": "Paused",
+      "COMPLETED": "Completed"
+    },
+    "budget": "Budget",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "spend": "Spend",
+    "impressions": "Impressions",
+    "clicks": "Clicks",
+    "ctr": "CTR",
+    "cpc": "CPC",
+    "leads": "Leads",
+    "conversions": "Conversions",
+    "revenue": "Revenue",
+    "roas": "ROAS",
+    "adSets": "Ad sets",
+    "adsList": "Ads",
+    "audience": "Target audience",
+    "platformComparison": "Platform comparison",
+    "dailyPerformance": "Daily performance",
+    "pause": "Pause",
+    "activate": "Activate",
+    "campaignCreated": "Campaign created",
+    "campaignUpdated": "Campaign updated"
+  },
+  "crm": {
+    "title": "CRM",
+    "subtitle": "Contacts, pipeline stages, and campaign attribution",
+    "newContact": "New contact",
+    "contactName": "Contact name",
+    "phone": "Phone",
+    "email": "Email",
+    "source": "Source",
+    "stage": "Stage",
+    "stages": {
+      "NEW": "New",
+      "CONTACTED": "Contacted",
+      "QUALIFIED": "Qualified",
+      "PROPOSAL": "Proposal",
+      "WON": "Won",
+      "LOST": "Lost"
+    },
+    "value": "Expected value",
+    "owner": "Owner",
+    "linkedCampaign": "Linked campaign",
+    "notes": "Notes",
+    "activityLog": "Activity log",
+    "addNote": "Add note",
+    "pipeline": "Pipeline",
+    "pipelineValue": "Pipeline value",
+    "contactCreated": "Contact added",
+    "stageChanged": "Stage changed from \"{from}\" to \"{to}\"",
+    "activityTypes": {
+      "NOTE": "Note",
+      "CALL": "Call",
+      "MEETING": "Meeting",
+      "STAGE_CHANGE": "Stage change"
+    }
+  },
+  "reports": {
+    "title": "Reports Engine",
+    "subtitle": "Ready templates, Excel/CSV export, print-to-PDF, and scheduled reports",
+    "template": "Report template",
+    "kinds": {
+      "MONTHLY_CLIENT": "Monthly client report",
+      "CAMPAIGN_PERFORMANCE": "Campaign performance",
+      "PLATFORM_COMPARISON": "Platform comparison",
+      "CONTENT_PERFORMANCE": "Content performance",
+      "INBOX_ACTIVITY": "Inbox activity",
+      "CRM_PIPELINE": "CRM pipeline"
+    },
+    "generate": "Generate report",
+    "exportCsv": "CSV",
+    "exportExcel": "Excel",
+    "printPdf": "Print / PDF",
+    "scheduled": "Scheduled reports",
+    "scheduleMonthly": "Schedule monthly",
+    "scheduledOk": "Report scheduled monthly",
+    "lastGenerated": "Last generated",
+    "noScheduled": "No scheduled reports",
+    "columns": {
+      "count": "Count",
+      "kind": "Type"
+    }
+  },
+  "insights": {
+    "title": "Insights & Recommendations",
+    "subtitle": "Smart, rules-based recommendations and alerts",
+    "run": "Run analysis now",
+    "runDone": "Generated {count} items from {campaigns} campaigns and accounts",
+    "kinds": {
+      "RECOMMENDATION": "Recommendation",
+      "ALERT": "Alert"
+    },
+    "severities": {
+      "INFO": "Info",
+      "OPPORTUNITY": "Opportunity",
+      "WARNING": "Warning",
+      "CRITICAL": "Critical"
+    },
+    "statuses": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In progress",
+      "RESOLVED": "Resolved",
+      "DISMISSED": "Dismissed"
+    },
+    "empty": "No insights yet — run the analysis",
+    "rules": {
+      "lowRoas": {
+        "title": "Campaign losing money: {name}",
+        "body": "ROAS is only {roas} after spending SAR {spend}. Consider pausing the campaign or revisiting audience and offer."
+      },
+      "lowCtr": {
+        "title": "Low click-through rate: {name}",
+        "body": "CTR of {ctr} is below the 0.8% benchmark. Try refreshing the creative or ad copy."
+      },
+      "scaleWinner": {
+        "title": "Scaling opportunity: {name}",
+        "body": "This campaign delivers an excellent return ({roas}). Gradually raising the budget by 20% could multiply results."
+      },
+      "cpcRising": {
+        "title": "CPC rising: {name}",
+        "body": "Cost per click rose {change} over the last 7 days vs the prior week ({from} → {to}). Watch for audience fatigue."
+      },
+      "engagementDrop": {
+        "title": "Engagement drop: {name}",
+        "body": "Account engagement fell {change} over the last 7 days vs the prior week. Try varying content or posting times."
+      },
+      "topPost": {
+        "title": "Top post of the last 30 days",
+        "body": "The post \"{excerpt}\" earned {engagements} engagements. Consider boosting it or reusing its format."
+      },
+      "bestTime": {
+        "title": "Best time to post",
+        "body": "Your audience engages most on {day} around {hour}. Schedule upcoming content in this window."
+      }
+    },
+    "markResolved": "Resolve",
+    "dismiss": "Dismiss",
+    "reopen": "Reopen"
+  },
+  "team": {
+    "title": "Team & Workspaces",
+    "subtitle": "Manage workspaces (clients/brands) and team members",
+    "workspaces": "Workspaces",
+    "members": "Team members",
+    "newWorkspace": "New workspace",
+    "workspaceName": "Workspace name",
+    "addMember": "Add member",
+    "memberEmail": "Member email",
+    "role": "Role",
+    "currentWorkspace": "Current workspace",
+    "switchWorkspace": "Switch workspace",
+    "removeMember": "Remove member",
+    "memberAdded": "Member added",
+    "workspaceCreated": "Workspace created"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Profile, system preferences, and platform API keys",
+    "profile": "Profile",
+    "displayName": "Display name",
+    "preferences": "Preferences",
+    "notifications": "Notifications",
+    "notifyApprovals": "Approval notifications",
+    "notifyInbox": "Inbox notifications",
+    "notifyAlerts": "Analytics alert notifications",
+    "apiKeys": "Platform API Keys",
+    "apiKeysHint": "Fields are ready but inactive in mock mode — see INTEGRATION-GUIDE.md for real connection steps per platform",
+    "apiKeysDisabled": "Inactive — the system currently runs on demo data",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
+  },
+  "audit": {
+    "title": "Audit Log",
+    "subtitle": "Full log of sensitive operations in this workspace",
+    "user": "User",
+    "action": "Action",
+    "entity": "Entity",
+    "systemUser": "System",
+    "actions": {
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "DELETE": "Delete",
+      "LOGIN": "Login",
+      "LOGOUT": "Logout",
+      "PUBLISH": "Publish",
+      "SCHEDULE": "Schedule",
+      "APPROVE": "Approve",
+      "REJECT": "Reject",
+      "EXPORT": "Export",
+      "CONNECT": "Connect",
+      "DISCONNECT": "Disconnect",
+      "REPLY": "Reply",
+      "ASSIGN": "Assign"
+    }
+  }
+}

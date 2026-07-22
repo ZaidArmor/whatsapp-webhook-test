@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 228 33% 97%; /* #F5F6FA */
+    --foreground: 247 45% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 247 45% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 247 45% 12%;
+
+    --primary: 244 44% 22%; /* #221F50 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 228 33% 94%;
+    --secondary-foreground: 244 44% 22%;
+
+    --muted: 228 20% 93%;
+    --muted-foreground: 218 11% 46%; /* derived from #9CA3AF */
+
+    --accent: 244 44% 96%;
+    --accent-foreground: 244 44% 22%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 38%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 32 95% 48%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 244 44% 22%;
+
+    --radius: 0.65rem;
+  }
+
+  .dark {
+    --background: 247 45% 8%;
+    --foreground: 228 20% 96%;
+
+    --card: 247 40% 11%;
+    --card-foreground: 228 20% 96%;
+
+    --popover: 247 40% 11%;
+    --popover-foreground: 228 20% 96%;
+
+    --primary: 244 55% 68%;
+    --primary-foreground: 247 45% 10%;
+
+    --secondary: 247 30% 16%;
+    --secondary-foreground: 228 20% 96%;
+
+    --muted: 247 25% 16%;
+    --muted-foreground: 218 11% 65%;
+
+    --accent: 247 30% 18%;
+    --accent-foreground: 228 20% 96%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 60% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 32 90% 55%;
+    --warning-foreground: 247 45% 10%;
+
+    --border: 247 25% 20%;
+    --input: 247 25% 20%;
+    --ring: 244 55% 68%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  ::selection {
+    @apply bg-primary/20;
+  }
+}
+
+/* Utility for horizontally-scrollable tables/dashboards without breaking page layout */
+@layer utilities {
+  .scroll-x-container {
+    @apply overflow-x-auto overscroll-x-contain;
+  }
+  .rtl-flip {
+    transform: scaleX(-1);
+  }
+  [dir="ltr"] .rtl-flip {
+    transform: none;
+  }
+}

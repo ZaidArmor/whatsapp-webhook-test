@@ -1,0 +1,453 @@
+{
+  "app": {
+    "name": "Marketing — مركز قيادة السوشال ميديا",
+    "shortName": "Marketing",
+    "tagline": "إدارة الحسابات والحملات والمحتوى من مكان واحد"
+  },
+  "common": {
+    "search": "بحث...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "create": "إنشاء",
+    "view": "عرض",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "next": "التالي",
+    "loading": "جارٍ التحميل...",
+    "noData": "لا توجد بيانات",
+    "noResults": "لا توجد نتائج مطابقة",
+    "error": "حدث خطأ غير متوقع",
+    "retry": "إعادة المحاولة",
+    "success": "تمت العملية بنجاح",
+    "all": "الكل",
+    "actions": "إجراءات",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "name": "الاسم",
+    "columns": "الأعمدة",
+    "export": "تصدير",
+    "print": "طباعة",
+    "results": "{count} نتيجة — صفحة {page} من {pages}",
+    "savedSuccessfully": "تم الحفظ بنجاح",
+    "areYouSure": "هل أنت متأكد؟",
+    "optional": "اختياري",
+    "today": "اليوم",
+    "last7Days": "آخر 7 أيام",
+    "last30Days": "آخر 30 يوماً",
+    "last90Days": "آخر 90 يوماً",
+    "platform": "المنصة",
+    "account": "الحساب",
+    "period": "الفترة",
+    "campaign": "الحملة",
+    "clearFilters": "مسح الفلاتر",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "collapse": "طي القائمة",
+    "details": "التفاصيل",
+    "permissionDenied": "لا تملك صلاحية تنفيذ هذا الإجراء",
+    "notConnectedYet": "لم يتم الربط بعد"
+  },
+  "nav": {
+    "groups": {
+      "general": "عام",
+      "content": "المحتوى",
+      "engagement": "التفاعل",
+      "growth": "النمو",
+      "admin": "الإدارة"
+    },
+    "dashboard": "لوحة التحكم",
+    "connections": "الحسابات المتصلة",
+    "posts": "المنشورات",
+    "composer": "منشور جديد",
+    "calendar": "التقويم",
+    "inbox": "صندوق الوارد",
+    "ads": "الحملات الإعلانية",
+    "crm": "العملاء (CRM)",
+    "reports": "التقارير",
+    "insights": "التحليلات والتوصيات",
+    "team": "الفريق ومساحات العمل",
+    "settings": "الإعدادات",
+    "auditLog": "سجل التدقيق"
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "signInTitle": "تسجيل الدخول إلى حسابك",
+    "signInSubtitle": "أدخل بيانات الدخول للوصول إلى مركز القيادة",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "invalidInput": "الرجاء التحقق من البيانات المدخلة",
+    "demoAccount": "حساب تجريبي: {email} / كلمة المرور: {password}",
+    "profile": "الملف الشخصي",
+    "highlight1": "نشر وجدولة موحّدة عبر 8 منصات",
+    "highlight2": "صندوق وارد واحد لكل التعليقات والرسائل",
+    "highlight3": "حملات إعلانية وتقارير ROAS بين المنصات"
+  },
+  "roles": {
+    "OWNER": "مالك",
+    "ADMIN": "مدير النظام",
+    "MANAGER": "مدير",
+    "EDITOR": "محرر",
+    "ANALYST": "محلل",
+    "VIEWER": "مشاهد"
+  },
+  "platforms": {
+    "FACEBOOK": "فيسبوك",
+    "INSTAGRAM": "إنستغرام",
+    "TIKTOK": "تيك توك",
+    "SNAPCHAT": "سناب شات",
+    "X_TWITTER": "إكس (تويتر)",
+    "LINKEDIN": "لينكدإن",
+    "GOOGLE_ADS": "إعلانات جوجل",
+    "YOUTUBE": "يوتيوب"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "subtitle": "نظرة موحّدة على الأداء عبر جميع المنصات",
+    "kpis": {
+      "followers": "إجمالي المتابعين",
+      "reach": "الوصول",
+      "impressions": "مرات الظهور",
+      "engagements": "التفاعلات",
+      "engagementRate": "معدل التفاعل",
+      "clicks": "النقرات",
+      "adSpend": "الإنفاق الإعلاني",
+      "revenue": "الإيرادات",
+      "conversions": "التحويلات",
+      "roas": "العائد على الإنفاق ROAS",
+      "cpc": "تكلفة النقرة CPC",
+      "publishedPosts": "منشورات منشورة",
+      "openConversations": "محادثات مفتوحة"
+    },
+    "charts": {
+      "followersGrowth": "نمو المتابعين",
+      "engagementByPlatform": "التفاعل حسب المنصة",
+      "reachTrend": "الوصول عبر الزمن",
+      "spendVsRevenue": "الإنفاق مقابل الإيرادات",
+      "roasByPlatform": "ROAS حسب المنصة",
+      "topPosts": "أفضل المنشورات أداءً"
+    },
+    "vsPrevPeriod": "مقارنة بالفترة السابقة",
+    "noChange": "بدون تغيير"
+  },
+  "connections": {
+    "title": "الحسابات المتصلة",
+    "subtitle": "ربط وإدارة حسابات المنصات — الوضع الحالي تجريبي (Mock) وجاهز للربط الحقيقي لاحقاً",
+    "connect": "ربط الحساب",
+    "disconnect": "فصل الحساب",
+    "reconnect": "إعادة الربط",
+    "sync": "مزامنة الآن",
+    "connected": "متصل",
+    "disconnected": "غير متصل",
+    "error": "خطأ",
+    "expired": "انتهت الصلاحية",
+    "followersCount": "{count} متابع",
+    "lastSync": "آخر مزامنة",
+    "tokenExpires": "انتهاء الصلاحية",
+    "accountId": "معرّف الحساب",
+    "disconnectConfirmTitle": "فصل الحساب",
+    "disconnectConfirmBody": "سيتم إيقاف المزامنة والنشر لهذا الحساب. يمكنك إعادة ربطه لاحقاً.",
+    "syncDone": "تمت مزامنة {count} عنصراً بنجاح",
+    "syncFailed": "فشلت المزامنة — أعد المحاولة"
+  },
+  "posts": {
+    "title": "المنشورات",
+    "subtitle": "كل المحتوى: مسودات، بانتظار الموافقة، مجدول، منشور",
+    "newPost": "منشور جديد",
+    "postBody": "نص المنشور",
+    "postTitle": "عنوان داخلي (اختياري)",
+    "selectAccounts": "حسابات النشر",
+    "preview": "معاينة",
+    "previewFor": "معاينة {platform}",
+    "media": "الوسائط",
+    "addMedia": "إضافة وسائط",
+    "schedule": "جدولة",
+    "scheduleAt": "وقت النشر",
+    "publishNow": "نشر الآن",
+    "saveDraft": "حفظ كمسودة",
+    "submitForApproval": "إرسال للموافقة",
+    "approve": "اعتماد",
+    "reject": "رفض",
+    "approvalNote": "ملاحظة الاعتماد/الرفض",
+    "bestTimes": "أفضل أوقات النشر المقترحة",
+    "bestTimeHint": "بناءً على تفاعل جمهورك خلال آخر 30 يوماً",
+    "queue": "قائمة الانتظار",
+    "emptyQueue": "لا توجد منشورات مجدولة",
+    "statuses": {
+      "DRAFT": "مسودة",
+      "PENDING_APPROVAL": "بانتظار الموافقة",
+      "APPROVED": "معتمد",
+      "REJECTED": "مرفوض",
+      "SCHEDULED": "مجدول",
+      "PUBLISHED": "منشور",
+      "FAILED": "فشل النشر"
+    },
+    "author": "الكاتب",
+    "targets": "المنصات المستهدفة",
+    "scheduledFor": "مجدول في",
+    "publishedAt": "نُشر في",
+    "bodyRequired": "نص المنشور مطلوب",
+    "accountsRequired": "اختر حساباً واحداً على الأقل",
+    "publishedSuccessfully": "تم النشر بنجاح (محاكاة)",
+    "scheduledSuccessfully": "تمت الجدولة بنجاح",
+    "perPlatformOverride": "تخصيص النص لهذه المنصة (اختياري)",
+    "metrics": {
+      "impressions": "ظهور",
+      "likes": "إعجابات",
+      "comments": "تعليقات",
+      "shares": "مشاركات",
+      "clicks": "نقرات"
+    }
+  },
+  "calendar": {
+    "title": "تقويم النشر",
+    "subtitle": "عرض شهري لكل المحتوى المجدول والمنشور",
+    "prevMonth": "الشهر السابق",
+    "nextMonth": "الشهر التالي",
+    "noPostsThisDay": "لا يوجد محتوى في هذا اليوم"
+  },
+  "inbox": {
+    "title": "صندوق الوارد الموحّد",
+    "subtitle": "كل التعليقات والرسائل من جميع المنصات في مكان واحد",
+    "kinds": {
+      "COMMENT": "تعليق",
+      "MESSAGE": "رسالة"
+    },
+    "statuses": {
+      "OPEN": "مفتوح",
+      "IN_PROGRESS": "قيد المعالجة",
+      "CLOSED": "مغلق"
+    },
+    "assignTo": "تعيين إلى",
+    "unassigned": "غير معيّن",
+    "reply": "الرد",
+    "replyPlaceholder": "اكتب ردك هنا...",
+    "send": "إرسال",
+    "markInProgress": "قيد المعالجة",
+    "markClosed": "إغلاق",
+    "reopen": "إعادة فتح",
+    "emptyInbox": "لا توجد محادثات مطابقة",
+    "selectConversation": "اختر محادثة من القائمة لعرضها",
+    "onPost": "على منشور",
+    "replySent": "تم إرسال الرد (محاكاة)"
+  },
+  "ads": {
+    "title": "إدارة الحملات الإعلانية",
+    "subtitle": "حملات ميتا وتيك توك وسناب شات وإعلانات جوجل من شاشة واحدة",
+    "newCampaign": "حملة جديدة",
+    "editCampaign": "تعديل الحملة",
+    "campaignName": "اسم الحملة",
+    "objective": "الهدف",
+    "objectives": {
+      "AWARENESS": "الوعي",
+      "TRAFFIC": "الزيارات",
+      "ENGAGEMENT": "التفاعل",
+      "LEADS": "العملاء المحتملون",
+      "CONVERSIONS": "التحويلات",
+      "SALES": "المبيعات"
+    },
+    "statuses": {
+      "DRAFT": "مسودة",
+      "ACTIVE": "نشطة",
+      "PAUSED": "متوقفة",
+      "COMPLETED": "منتهية"
+    },
+    "budget": "الميزانية",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "spend": "المصروف",
+    "impressions": "مرات الظهور",
+    "clicks": "النقرات",
+    "ctr": "CTR",
+    "cpc": "CPC",
+    "leads": "Leads",
+    "conversions": "التحويلات",
+    "revenue": "الإيرادات",
+    "roas": "ROAS",
+    "adSets": "المجموعات الإعلانية",
+    "adsList": "الإعلانات",
+    "audience": "الجمهور المستهدف",
+    "platformComparison": "مقارنة المنصات",
+    "dailyPerformance": "الأداء اليومي",
+    "pause": "إيقاف مؤقت",
+    "activate": "تفعيل",
+    "campaignCreated": "تم إنشاء الحملة",
+    "campaignUpdated": "تم تحديث الحملة"
+  },
+  "crm": {
+    "title": "إدارة العملاء (CRM)",
+    "subtitle": "جهات الاتصال ومراحل البيع وربطها بالحملات",
+    "newContact": "جهة اتصال جديدة",
+    "contactName": "اسم جهة الاتصال",
+    "phone": "الجوال",
+    "email": "البريد الإلكتروني",
+    "source": "المصدر",
+    "stage": "المرحلة",
+    "stages": {
+      "NEW": "جديد",
+      "CONTACTED": "تم التواصل",
+      "QUALIFIED": "مؤهل",
+      "PROPOSAL": "عرض سعر",
+      "WON": "صفقة رابحة",
+      "LOST": "صفقة خاسرة"
+    },
+    "value": "القيمة المتوقعة",
+    "owner": "المسؤول",
+    "linkedCampaign": "الحملة المرتبطة",
+    "notes": "ملاحظات",
+    "activityLog": "سجل التفاعلات",
+    "addNote": "إضافة ملاحظة",
+    "pipeline": "مسار المبيعات",
+    "pipelineValue": "قيمة المسار",
+    "contactCreated": "تمت إضافة جهة الاتصال",
+    "stageChanged": "تم تغيير المرحلة من \"{from}\" إلى \"{to}\"",
+    "activityTypes": {
+      "NOTE": "ملاحظة",
+      "CALL": "مكالمة",
+      "MEETING": "اجتماع",
+      "STAGE_CHANGE": "تغيير مرحلة"
+    }
+  },
+  "reports": {
+    "title": "محرك التقارير",
+    "subtitle": "قوالب جاهزة، تصدير Excel/CSV، طباعة PDF، وتقارير مجدولة",
+    "template": "قالب التقرير",
+    "kinds": {
+      "MONTHLY_CLIENT": "التقرير الشهري للعميل",
+      "CAMPAIGN_PERFORMANCE": "أداء حملة إعلانية",
+      "PLATFORM_COMPARISON": "مقارنة المنصات",
+      "CONTENT_PERFORMANCE": "أداء المحتوى",
+      "INBOX_ACTIVITY": "نشاط صندوق الوارد",
+      "CRM_PIPELINE": "مسار المبيعات CRM"
+    },
+    "generate": "توليد التقرير",
+    "exportCsv": "CSV",
+    "exportExcel": "Excel",
+    "printPdf": "طباعة / PDF",
+    "scheduled": "التقارير المجدولة",
+    "scheduleMonthly": "جدولة شهرياً",
+    "scheduledOk": "تمت جدولة التقرير شهرياً",
+    "lastGenerated": "آخر توليد",
+    "noScheduled": "لا توجد تقارير مجدولة",
+    "columns": {
+      "count": "العدد",
+      "kind": "النوع"
+    }
+  },
+  "insights": {
+    "title": "التحليلات والتوصيات",
+    "subtitle": "توصيات وتنبيهات ذكية مبنية على قواعد تحليلية",
+    "run": "تشغيل التحليل الآن",
+    "runDone": "تم توليد {count} عنصراً من {campaigns} حملة وحساب",
+    "kinds": {
+      "RECOMMENDATION": "توصية",
+      "ALERT": "تنبيه"
+    },
+    "severities": {
+      "INFO": "معلومة",
+      "OPPORTUNITY": "فرصة",
+      "WARNING": "تحذير",
+      "CRITICAL": "حرج"
+    },
+    "statuses": {
+      "OPEN": "مفتوح",
+      "IN_PROGRESS": "قيد المعالجة",
+      "RESOLVED": "تم الحل",
+      "DISMISSED": "متجاهل"
+    },
+    "empty": "لا توجد توصيات بعد — شغّل التحليل",
+    "rules": {
+      "lowRoas": {
+        "title": "حملة تخسر أموالاً: {name}",
+        "body": "العائد على الإنفاق {roas} فقط بعد صرف {spend} ر.س. يُنصح بإيقاف الحملة مؤقتاً أو مراجعة الجمهور والعرض."
+      },
+      "lowCtr": {
+        "title": "نسبة نقر منخفضة: {name}",
+        "body": "معدل النقر {ctr} أقل من الحد المرجعي (0.8%). جرّب تحديث التصميم أو النص الإعلاني."
+      },
+      "scaleWinner": {
+        "title": "فرصة توسّع: {name}",
+        "body": "الحملة تحقق عائداً ممتازاً ({roas}). زيادة الميزانية تدريجياً بنسبة 20% قد تضاعف النتائج."
+      },
+      "cpcRising": {
+        "title": "ارتفاع تكلفة النقرة: {name}",
+        "body": "تكلفة النقرة ارتفعت {change} خلال آخر 7 أيام مقارنة بالأسبوع السابق ({from} ← {to}). راقب إرهاق الجمهور."
+      },
+      "engagementDrop": {
+        "title": "انخفاض التفاعل: {name}",
+        "body": "تفاعل الحساب انخفض {change} خلال آخر 7 أيام مقارنة بالأسبوع السابق. جرّب تنويع المحتوى أو أوقات النشر."
+      },
+      "topPost": {
+        "title": "أفضل منشور خلال 30 يوماً",
+        "body": "المنشور \"{excerpt}\" حقق {engagements} تفاعلاً. يُنصح بترويجه أو إعادة استخدام صيغته."
+      },
+      "bestTime": {
+        "title": "أفضل وقت للنشر",
+        "body": "أعلى تفاعل لجمهورك يتحقق يوم {day} حوالي الساعة {hour}. جدوِل المحتوى القادم في هذا الوقت."
+      }
+    },
+    "markResolved": "تم الحل",
+    "dismiss": "تجاهل",
+    "reopen": "إعادة فتح"
+  },
+  "team": {
+    "title": "الفريق ومساحات العمل",
+    "subtitle": "إدارة مساحات العمل (العملاء/العلامات التجارية) وأعضاء الفريق",
+    "workspaces": "مساحات العمل",
+    "members": "أعضاء الفريق",
+    "newWorkspace": "مساحة عمل جديدة",
+    "workspaceName": "اسم مساحة العمل",
+    "addMember": "إضافة عضو",
+    "memberEmail": "البريد الإلكتروني للعضو",
+    "role": "الدور",
+    "currentWorkspace": "مساحة العمل الحالية",
+    "switchWorkspace": "تبديل مساحة العمل",
+    "removeMember": "إزالة العضو",
+    "memberAdded": "تمت إضافة العضو",
+    "workspaceCreated": "تم إنشاء مساحة العمل"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "subtitle": "الملف الشخصي وتفضيلات النظام ومفاتيح المنصات",
+    "profile": "الملف الشخصي",
+    "displayName": "الاسم الظاهر",
+    "preferences": "التفضيلات",
+    "notifications": "الإشعارات",
+    "notifyApprovals": "إشعارات الموافقات",
+    "notifyInbox": "إشعارات صندوق الوارد",
+    "notifyAlerts": "إشعارات التنبيهات التحليلية",
+    "apiKeys": "مفاتيح المنصات (API)",
+    "apiKeysHint": "الحقول جاهزة لكنها غير مفعّلة في وضع المحاكاة — راجع INTEGRATION-GUIDE.md لخطوات الربط الحقيقي لكل منصة",
+    "apiKeysDisabled": "غير مفعّل — النظام يعمل حالياً بالبيانات التجريبية",
+    "darkMode": "الوضع الليلي",
+    "lightMode": "الوضع النهاري"
+  },
+  "audit": {
+    "title": "سجل التدقيق",
+    "subtitle": "سجل كامل للعمليات الحساسة في مساحة العمل",
+    "user": "المستخدم",
+    "action": "الإجراء",
+    "entity": "الكائن",
+    "systemUser": "النظام",
+    "actions": {
+      "CREATE": "إنشاء",
+      "UPDATE": "تعديل",
+      "DELETE": "حذف",
+      "LOGIN": "تسجيل دخول",
+      "LOGOUT": "تسجيل خروج",
+      "PUBLISH": "نشر",
+      "SCHEDULE": "جدولة",
+      "APPROVE": "اعتماد",
+      "REJECT": "رفض",
+      "EXPORT": "تصدير",
+      "CONNECT": "ربط",
+      "DISCONNECT": "فصل",
+      "REPLY": "رد",
+      "ASSIGN": "تعيين"
+    }
+  }
+}

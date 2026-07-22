@@ -1,0 +1,27 @@
+"use client";
+
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+
+export function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  // Standard next-themes SSR guard: `resolvedTheme` is only meaningful after
+  // client mount, so this deliberately triggers one extra render.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  React.useEffect(() => setMounted(true), []);
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label="تبديل المظهر"
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+    >
+      {mounted && resolvedTheme === "dark" ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
+    </Button>
+  );
+}

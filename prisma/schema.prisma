@@ -1,0 +1,916 @@
+// ============================================================================
+// ARMOR Marketing Intelligence Hub — Prisma Schema
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------------------------------
+// Enums
+// ----------------------------------------------------------------------------
+
+enum RoleName {
+  SUPER_ADMIN
+  EXECUTIVE_MANAGER
+  MARKETING_MANAGER
+  CAMPAIGN_SPECIALIST
+  SALES_MANAGER
+  BRANCH_MANAGER
+  SALES_EMPLOYEE
+  DATA_ANALYST
+  VIEWER
+}
+
+enum PermissionKey {
+  VIEW_DASHBOARD
+  VIEW_ALL_BRANCHES
+  VIEW_SINGLE_BRANCH
+  IMPORT_CUSTOMERS
+  EXPORT_CUSTOMERS
+  EDIT_CUSTOMERS
+  DELETE_CUSTOMERS
+  MANAGE_CAMPAIGNS
+  MANAGE_INTEGRATIONS
+  VIEW_REVENUE
+  VIEW_CUSTOMER_DATA
+  MANAGE_USERS
+  EDIT_ANALYSIS_SETTINGS
+}
+
+enum Platform {
+  META_ADS
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK_ADS
+  TIKTOK
+  SNAPCHAT_ADS
+  GOOGLE_ADS
+  GA4
+  GOOGLE_SEARCH_CONSOLE
+  YOUTUBE
+  WHATSAPP_BUSINESS
+  GOOGLE_BUSINESS_PROFILE
+  LINKEDIN
+  X_TWITTER
+}
+
+enum IntegrationStatus {
+  NOT_CONNECTED
+  CONNECTED
+  ERROR
+  EXPIRED
+  SYNCING
+}
+
+enum CampaignObjective {
+  LEADS
+  TRAFFIC
+  AWARENESS
+  ENGAGEMENT
+  CONVERSIONS
+  APP_PROMOTION
+  CATALOG_SALES
+  STORE_VISITS
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum CustomerStatus {
+  NEW
+  CONTACTED
+  INTERESTED
+  QUOTE_REQUESTED
+  BOOKED
+  ATTENDED
+  SOLD
+  NO_ANSWER
+  NOT_INTERESTED
+  POSTPONED
+  PAST_CUSTOMER
+  RETARGETING_OPPORTUNITY
+}
+
+enum LeadSource {
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK
+  SNAPCHAT
+  GOOGLE
+  WHATSAPP
+  WEBSITE
+  WALK_IN
+  REFERRAL
+  CALL_CENTER
+  OTHER
+}
+
+enum PhoneValidity {
+  VALID
+  INVALID
+  UNKNOWN
+}
+
+enum ImportFileType {
+  CSV
+  XLSX
+  XLS
+}
+
+enum ImportJobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  COMPLETED_WITH_ERRORS
+  FAILED
+}
+
+enum ImportRowStatus {
+  ACCEPTED
+  REJECTED
+  DUPLICATE
+}
+
+enum SegmentConditionField {
+  CITY
+  BRANCH
+  SERVICE
+  CAMPAIGN
+  PLATFORM
+  SOURCE
+  CUSTOMER_STATUS
+  PURCHASE_VALUE
+  LAST_PURCHASE_DATE
+  LAST_CONTACT_DATE
+  FIRST_CONTACT_DATE
+  MARKETING_CONSENT
+  IS_DUPLICATE
+  PHONE_VALIDITY
+  TAG
+  INACTIVE_DAYS
+}
+
+enum SegmentConditionOperator {
+  EQUALS
+  NOT_EQUALS
+  GREATER_THAN
+  LESS_THAN
+  GREATER_OR_EQUAL
+  LESS_OR_EQUAL
+  CONTAINS
+  IN
+  NOT_IN
+  IS_TRUE
+  IS_FALSE
+  BEFORE
+  AFTER
+  OLDER_THAN_DAYS
+}
+
+enum SegmentLogicalOperator {
+  AND
+  OR
+}
+
+enum ExportTargetFormat {
+  CSV
+  XLSX
+  META_CUSTOM_AUDIENCE
+  GOOGLE_CUSTOMER_MATCH
+  TIKTOK_AUDIENCE
+  SNAPCHAT_AUDIENCE
+  WHATSAPP_CAMPAIGN
+}
+
+enum ExportJobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum RecommendationType {
+  OPPORTUNITY
+  WARNING
+  DANGER
+  EXCELLENT
+  NEEDS_FOLLOW_UP
+}
+
+enum RecommendationStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  DISMISSED
+}
+
+enum RecommendationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+enum AlertStatus {
+  ACTIVE
+  ACKNOWLEDGED
+  RESOLVED
+}
+
+enum ServiceCategory {
+  PPF
+  THERMAL_INSULATION_CAR
+  NANO_CERAMIC
+  POLISHING
+  THERMAL_INSULATION_BUILDING
+  OTHER
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  EXPORT
+  IMPORT
+  LOGIN
+  LOGOUT
+  CONNECT_INTEGRATION
+  DISCONNECT_INTEGRATION
+  MERGE_CUSTOMERS
+}
+
+// ----------------------------------------------------------------------------
+// Auth / Users / Roles / Permissions
+// ----------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String?
+  image         String?
+  isActive      Boolean   @default(true)
+  branchId      String?
+  branch        Branch?   @relation(fields: [branchId], references: [id])
+  emailVerified DateTime?
+
+  userRoles         UserRole[]
+  campaignsAssigned Campaign[]        @relation("CampaignOwner")
+  customersOwned    Customer[]        @relation("CustomerOwner")
+  importJobs        ImportJob[]
+  exportJobs        ExportJob[]
+  segments          Segment[]
+  auditLogs         AuditLog[]
+  recommendations   Recommendation[]  @relation("RecommendationAssignee")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([email])
+  @@index([branchId])
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  name        RoleName         @unique
+  label       String
+  description String?
+  permissions RolePermission[]
+  userRoles   UserRole[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Permission {
+  id          String            @id @default(cuid())
+  key         PermissionKey     @unique
+  label       String
+  description String?
+  roles       RolePermission[]
+
+  createdAt DateTime @default(now())
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permissionId String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+model UserRole {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@index([userId])
+}
+
+// ----------------------------------------------------------------------------
+// Branches / Services
+// ----------------------------------------------------------------------------
+
+model Branch {
+  id        String   @id @default(cuid())
+  name      String
+  nameEn    String?
+  city      String
+  isActive  Boolean  @default(true)
+
+  users     User[]
+  customers Customer[]
+  campaigns Campaign[]
+  sales     Sale[]
+  leads     Lead[]
+  bookings  Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([city])
+}
+
+model Service {
+  id                     String          @id @default(cuid())
+  nameAr                 String
+  nameEn                 String
+  category               ServiceCategory
+  isActive               Boolean         @default(true)
+  expectedSaleValue      Decimal         @default(0) @db.Decimal(12, 2)
+  targetCpl              Decimal         @default(0) @db.Decimal(12, 2)
+  targetRoas             Decimal         @default(0) @db.Decimal(6, 2)
+
+  customers Customer[]
+  campaigns Campaign[]
+  sales     Sale[]
+  leads     Lead[]
+  bookings  Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([category])
+}
+
+// ----------------------------------------------------------------------------
+// Integrations / Ad Accounts
+// ----------------------------------------------------------------------------
+
+model Integration {
+  id               String            @id @default(cuid())
+  platform         Platform          @unique
+  status           IntegrationStatus @default(NOT_CONNECTED)
+  accountName      String?
+  accountExternalId String?
+  lastSyncAt       DateTime?
+  tokenExpiresAt   DateTime?
+  isMock           Boolean           @default(true)
+  errorMessage     String?
+
+  socialAccounts SocialAccount[]
+  adAccounts     AdAccount[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([platform])
+  @@index([status])
+}
+
+model SocialAccount {
+  id            String      @id @default(cuid())
+  integrationId String
+  integration   Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  platform      Platform
+  handle        String
+  externalId    String
+  followers     Int         @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([platform])
+}
+
+model AdAccount {
+  id            String      @id @default(cuid())
+  integrationId String
+  integration   Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  platform      Platform
+  name          String
+  externalId    String
+  currency      String      @default("SAR")
+  timezone      String      @default("Asia/Riyadh")
+
+  campaigns Campaign[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([platform])
+}
+
+// ----------------------------------------------------------------------------
+// Campaigns / AdSets / Ads / Metrics
+// ----------------------------------------------------------------------------
+
+model Campaign {
+  id          String            @id @default(cuid())
+  name        String
+  platform    Platform
+  adAccountId String?
+  adAccount   AdAccount?        @relation(fields: [adAccountId], references: [id])
+  objective   CampaignObjective
+  status      CampaignStatus    @default(ACTIVE)
+  startDate   DateTime
+  endDate     DateTime?
+  budget      Decimal           @db.Decimal(12, 2)
+
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id])
+  serviceId String?
+  service  Service? @relation(fields: [serviceId], references: [id])
+
+  ownerId String?
+  owner   User?   @relation("CampaignOwner", fields: [ownerId], references: [id])
+
+  adSets          AdSet[]
+  metrics         CampaignMetric[]
+  customers       Customer[]
+  leads           Lead[]
+  sales           Sale[]
+  bookings        Booking[]
+  recommendations Recommendation[]
+  alerts          Alert[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([platform])
+  @@index([status])
+  @@index([branchId])
+  @@index([serviceId])
+  @@index([startDate])
+}
+
+model AdSet {
+  id         String   @id @default(cuid())
+  campaignId String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  name       String
+  audience   String?
+  budget     Decimal  @db.Decimal(12, 2)
+
+  ads     Ad[]
+  metrics CampaignMetric[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([campaignId])
+}
+
+model Ad {
+  id         String   @id @default(cuid())
+  adSetId    String
+  adSet      AdSet    @relation(fields: [adSetId], references: [id], onDelete: Cascade)
+  name       String
+  creativeType String? // image, video, carousel
+  headline   String?
+  bodyText   String?
+  thumbnailUrl String?
+
+  metrics CampaignMetric[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([adSetId])
+}
+
+// Daily performance grain. Aggregated up to campaign/adset/ad level as needed.
+model CampaignMetric {
+  id         String    @id @default(cuid())
+  date       DateTime  @db.Date
+  campaignId String
+  campaign   Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  adSetId    String?
+  adSet      AdSet?    @relation(fields: [adSetId], references: [id], onDelete: SetNull)
+  adId       String?
+  ad         Ad?       @relation(fields: [adId], references: [id], onDelete: SetNull)
+
+  impressions Int     @default(0)
+  reach       Int     @default(0)
+  clicks      Int     @default(0)
+  spend       Decimal @default(0) @db.Decimal(12, 2)
+  leads       Int     @default(0)
+  conversations Int   @default(0)
+  bookings    Int     @default(0)
+  sales       Int     @default(0)
+  revenue     Decimal @default(0) @db.Decimal(12, 2)
+
+  // Optional breakdown dimensions (nullable => aggregate row when null)
+  device  String?
+  region  String?
+  ageRange String?
+  gender  String?
+  hour    Int?
+
+  createdAt DateTime @default(now())
+
+  @@index([campaignId, date])
+  @@index([date])
+  @@index([adSetId])
+  @@index([adId])
+}
+
+// ----------------------------------------------------------------------------
+// Tags
+// ----------------------------------------------------------------------------
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String @unique
+  color String @default("#221F50")
+
+  customers CustomerTag[]
+
+  createdAt DateTime @default(now())
+}
+
+model CustomerTag {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  tagId      String
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([customerId, tagId])
+}
+
+// ----------------------------------------------------------------------------
+// Customers (CRM)
+// ----------------------------------------------------------------------------
+
+model Customer {
+  id String @id @default(cuid())
+
+  name  String
+  originalPhone   String
+  normalizedPhone String?
+  countryCode     String?
+  phoneValidity   PhoneValidity @default(UNKNOWN)
+  email String?
+
+  city     String?
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id])
+
+  source     LeadSource?
+  platform   Platform?
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  adName     String?
+
+  serviceId String?
+  service   Service? @relation(fields: [serviceId], references: [id])
+
+  status              CustomerStatus @default(NEW)
+  potentialValue       Decimal       @default(0) @db.Decimal(12, 2)
+  totalPurchaseValue   Decimal       @default(0) @db.Decimal(12, 2)
+  visitCount           Int           @default(0)
+
+  firstContactAt  DateTime?
+  lastContactAt   DateTime?
+  lastPurchaseAt  DateTime?
+
+  ownerId String?
+  owner   User?   @relation("CustomerOwner", fields: [ownerId], references: [id])
+
+  marketingConsent Boolean @default(false)
+  notes            String?
+
+  isDuplicate      Boolean   @default(false)
+  duplicateOfId    String?
+  duplicateOf      Customer? @relation("CustomerDuplicates", fields: [duplicateOfId], references: [id])
+  duplicatesOfThis Customer[] @relation("CustomerDuplicates")
+
+  importRowId String?
+  importRow   ImportRow? @relation(fields: [importRowId], references: [id])
+
+  tags       CustomerTag[]
+  activities CustomerActivity[]
+  leads      Lead[]
+  bookings   Booking[]
+  sales      Sale[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([normalizedPhone])
+  @@index([email])
+  @@index([branchId])
+  @@index([campaignId])
+  @@index([createdAt])
+  @@index([platform])
+  @@index([status])
+}
+
+model CustomerActivity {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  type       String // status_change, note, call, whatsapp, merge, etc.
+  description String
+  createdById String?
+
+  createdAt DateTime @default(now())
+
+  @@index([customerId, createdAt])
+}
+
+// ----------------------------------------------------------------------------
+// Leads / Bookings / Sales
+// ----------------------------------------------------------------------------
+
+model Lead {
+  id         String    @id @default(cuid())
+  customerId String
+  customer   Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  branchId   String?
+  branch     Branch?   @relation(fields: [branchId], references: [id])
+  serviceId  String?
+  service    Service?  @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([campaignId])
+  @@index([branchId])
+  @@index([createdAt])
+}
+
+model Booking {
+  id         String    @id @default(cuid())
+  customerId String
+  customer   Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  branchId   String?
+  branch     Branch?   @relation(fields: [branchId], references: [id])
+  serviceId  String?
+  service    Service?  @relation(fields: [serviceId], references: [id])
+
+  scheduledAt DateTime
+  attended    Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([campaignId])
+  @@index([branchId])
+  @@index([scheduledAt])
+}
+
+model Sale {
+  id         String    @id @default(cuid())
+  customerId String
+  customer   Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+  branchId   String?
+  branch     Branch?   @relation(fields: [branchId], references: [id])
+  serviceId  String?
+  service    Service?  @relation(fields: [serviceId], references: [id])
+
+  amount Decimal @db.Decimal(12, 2)
+  soldAt DateTime @default(now())
+
+  createdAt DateTime @default(now())
+
+  @@index([campaignId])
+  @@index([branchId])
+  @@index([soldAt])
+}
+
+// ----------------------------------------------------------------------------
+// Import / Export
+// ----------------------------------------------------------------------------
+
+model ImportJob {
+  id       String         @id @default(cuid())
+  fileName String
+  fileType ImportFileType
+  userId   String
+  user     User           @relation(fields: [userId], references: [id])
+
+  status          ImportJobStatus @default(PENDING)
+  columnMapping   Json?
+  totalRows       Int             @default(0)
+  acceptedRows    Int             @default(0)
+  rejectedRows    Int             @default(0)
+  duplicateRows   Int             @default(0)
+  errorFileUrl    String?
+
+  rows ImportRow[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model ImportRow {
+  id          String          @id @default(cuid())
+  importJobId String
+  importJob   ImportJob       @relation(fields: [importJobId], references: [id], onDelete: Cascade)
+  rowNumber   Int
+  rawData     Json
+  status      ImportRowStatus
+  errorReason String?
+
+  customers Customer[]
+
+  createdAt DateTime @default(now())
+
+  @@index([importJobId])
+  @@index([status])
+}
+
+model ExportJob {
+  id     String   @id @default(cuid())
+  userId String
+  user   User     @relation(fields: [userId], references: [id])
+
+  targetFormat ExportTargetFormat
+  segmentId    String?
+  segment      Segment?           @relation(fields: [segmentId], references: [id])
+  status       ExportJobStatus    @default(PENDING)
+  rowCount     Int                @default(0)
+  fileUrl      String?
+  options      Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([segmentId])
+}
+
+// ----------------------------------------------------------------------------
+// Segments
+// ----------------------------------------------------------------------------
+
+model Segment {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  isArchived  Boolean  @default(false)
+  customerCountCache Int @default(0)
+
+  conditions SegmentCondition[]
+  exportJobs ExportJob[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model SegmentCondition {
+  id        String                    @id @default(cuid())
+  segmentId String
+  segment   Segment                   @relation(fields: [segmentId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    SegmentCondition?         @relation("ConditionGroup", fields: [parentId], references: [id], onDelete: Cascade)
+  children  SegmentCondition[]        @relation("ConditionGroup")
+
+  logicalOperator SegmentLogicalOperator @default(AND)
+  field           SegmentConditionField?
+  operator        SegmentConditionOperator?
+  value           Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([segmentId])
+  @@index([parentId])
+}
+
+// ----------------------------------------------------------------------------
+// Analysis engine / Recommendations / Alerts
+// ----------------------------------------------------------------------------
+
+model AnalysisRule {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g. LOW_CTR, HIGH_CPL, HIGH_FREQUENCY
+  label       String
+  description String?
+  isEnabled   Boolean  @default(true)
+  threshold   Decimal? @db.Decimal(12, 4)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Recommendation {
+  id          String                 @id @default(cuid())
+  type        RecommendationType
+  title       String
+  explanation String
+  reason      String
+  supportingData Json
+  priority    RecommendationPriority @default(MEDIUM)
+  status      RecommendationStatus   @default(OPEN)
+  suggestedAction String
+
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+
+  assigneeId String?
+  assignee   User?    @relation("RecommendationAssignee", fields: [assigneeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([campaignId])
+  @@index([type])
+  @@index([status])
+}
+
+model Alert {
+  id       String        @id @default(cuid())
+  severity AlertSeverity
+  status   AlertStatus   @default(ACTIVE)
+  title    String
+  message  String
+
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([severity])
+  @@index([campaignId])
+}
+
+// ----------------------------------------------------------------------------
+// Settings / Audit
+// ----------------------------------------------------------------------------
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value Json
+
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String      @id @default(cuid())
+  userId     String?
+  user       User?       @relation(fields: [userId], references: [id])
+  action     AuditAction
+  entityType String
+  entityId   String?
+  metadata   Json?
+  ipAddress  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
