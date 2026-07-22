@@ -213,8 +213,15 @@
   "inbox": {
     "title": "صندوق الوارد الموحّد",
     "subtitle": "كل التعليقات والرسائل من جميع المنصات في مكان واحد",
-    "kinds": { "COMMENT": "تعليق", "MESSAGE": "رسالة" },
-    "statuses": { "OPEN": "مفتوح", "IN_PROGRESS": "قيد المعالجة", "CLOSED": "مغلق" },
+    "kinds": {
+      "COMMENT": "تعليق",
+      "MESSAGE": "رسالة"
+    },
+    "statuses": {
+      "OPEN": "مفتوح",
+      "IN_PROGRESS": "قيد المعالجة",
+      "CLOSED": "مغلق"
+    },
     "assignTo": "تعيين إلى",
     "unassigned": "غير معيّن",
     "reply": "الرد",
@@ -230,7 +237,7 @@
   },
   "ads": {
     "title": "إدارة الحملات الإعلانية",
-    "subtitle": "حملات Meta وTikTok وSnapchat وGoogle Ads من شاشة واحدة",
+    "subtitle": "حملات ميتا وتيك توك وسناب شات وإعلانات جوجل من شاشة واحدة",
     "newCampaign": "حملة جديدة",
     "editCampaign": "تعديل الحملة",
     "campaignName": "اسم الحملة",
@@ -243,7 +250,12 @@
       "CONVERSIONS": "التحويلات",
       "SALES": "المبيعات"
     },
-    "statuses": { "DRAFT": "مسودة", "ACTIVE": "نشطة", "PAUSED": "متوقفة", "COMPLETED": "منتهية" },
+    "statuses": {
+      "DRAFT": "مسودة",
+      "ACTIVE": "نشطة",
+      "PAUSED": "متوقفة",
+      "COMPLETED": "منتهية"
+    },
     "budget": "الميزانية",
     "startDate": "تاريخ البداية",
     "endDate": "تاريخ النهاية",
@@ -321,9 +333,22 @@
     "subtitle": "توصيات وتنبيهات ذكية مبنية على قواعد تحليلية",
     "run": "تشغيل التحليل الآن",
     "runDone": "تم توليد {count} عنصراً من {campaigns} حملة وحساب",
-    "kinds": { "RECOMMENDATION": "توصية", "ALERT": "تنبيه" },
-    "severities": { "INFO": "معلومة", "OPPORTUNITY": "فرصة", "WARNING": "تحذير", "CRITICAL": "حرج" },
-    "statuses": { "OPEN": "مفتوح", "IN_PROGRESS": "قيد المعالجة", "RESOLVED": "تم الحل", "DISMISSED": "متجاهل" },
+    "kinds": {
+      "RECOMMENDATION": "توصية",
+      "ALERT": "تنبيه"
+    },
+    "severities": {
+      "INFO": "معلومة",
+      "OPPORTUNITY": "فرصة",
+      "WARNING": "تحذير",
+      "CRITICAL": "حرج"
+    },
+    "statuses": {
+      "OPEN": "مفتوح",
+      "IN_PROGRESS": "قيد المعالجة",
+      "RESOLVED": "تم الحل",
+      "DISMISSED": "متجاهل"
+    },
     "empty": "لا توجد توصيات بعد — شغّل التحليل"
   },
   "team": {
